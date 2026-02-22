@@ -6,7 +6,7 @@
   --color-surface: #0a0a0a;
   --color-primary: #CA8A04;
   --color-text-primary: rgba(255, 255, 255, 0.9);
-  --color-text-secondary: rgba(163, 163, 163, 0.6);
+  --color-text-secondary: rgba(163, 163, 163, 0.85);
   --color-border: #333333;
 
   --font-serif: "Playfair Display", serif;
@@ -18,14 +18,22 @@
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #333 var(--color-background);
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar — Chrome/Safari/Edge */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -53,4 +61,295 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(to right, #fff, #a3a3a3);
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* ===== Ornate Baroque Frame ===== */
+.ornate-frame {
+  position: relative;
+  background:
+    linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow:
+    0 0 60px rgba(191, 149, 63, 0.3),
+    0 0 120px rgba(191, 149, 63, 0.1),
+    inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.ornate-frame::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #aa771c, #d4a540, #fcf6ba, #b38728, #aa771c);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.ornate-frame::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 6px;
+  border: 2px solid rgba(252, 246, 186, 0.5);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(191, 149, 63, 0.3) 6px,
+      rgba(191, 149, 63, 0.3) 7px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(191, 149, 63, 0.3) 6px,
+      rgba(191, 149, 63, 0.3) 7px
+    );
+  z-index: 2;
+}
+
+.ornate-inner-border {
+  position: relative;
+  z-index: 3;
+  border: 3px solid #8b6914;
+  border-radius: 4px;
+  padding: 4px;
+  background: linear-gradient(135deg, #725a18, #a07c28, #d4a540, #a07c28, #725a18);
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.ornate-inner-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 5px;
+  border: 1px solid rgba(252, 246, 186, 0.4);
+  pointer-events: none;
+}
+
+.ornate-mat {
+  background: linear-gradient(135deg, #1a1508, #0d0b04, #1a1508);
+  border: 1px solid #3d3015;
+  padding: 6px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Corner ornaments */
+.ornate-corner {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  z-index: 10;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+}
+
+.ornate-corner svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ornate-corner--tl { top: -4px; left: -4px; }
+.ornate-corner--tr { top: -4px; right: -4px; transform: scaleX(-1); }
+.ornate-corner--bl { bottom: -4px; left: -4px; transform: scaleY(-1); }
+.ornate-corner--br { bottom: -4px; right: -4px; transform: scale(-1, -1); }
+
+/* Top/bottom center ornaments */
+.ornate-center-top,
+.ornate-center-bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 120px;
+  height: 50px;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+}
+
+.ornate-center-top { top: -6px; }
+.ornate-center-bottom { bottom: -6px; transform: translateX(-50%) scaleY(-1); }
+
+/* Edge bead/rope pattern */
+.ornate-edge-pattern {
+  position: absolute;
+  inset: 18px;
+  border-radius: 6px;
+  z-index: 4;
+  pointer-events: none;
+  border: 1px solid transparent;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(252, 246, 186, 0.6) 0px,
+      rgba(191, 149, 63, 0.8) 2px,
+      transparent 2px,
+      transparent 8px
+    ) top / 100% 2px no-repeat,
+    repeating-linear-gradient(
+      90deg,
+      rgba(252, 246, 186, 0.6) 0px,
+      rgba(191, 149, 63, 0.8) 2px,
+      transparent 2px,
+      transparent 8px
+    ) bottom / 100% 2px no-repeat,
+    repeating-linear-gradient(
+      0deg,
+      rgba(252, 246, 186, 0.6) 0px,
+      rgba(191, 149, 63, 0.8) 2px,
+      transparent 2px,
+      transparent 8px
+    ) left / 2px 100% no-repeat,
+    repeating-linear-gradient(
+      0deg,
+      rgba(252, 246, 186, 0.6) 0px,
+      rgba(191, 149, 63, 0.8) 2px,
+      transparent 2px,
+      transparent 8px
+    ) right / 2px 100% no-repeat;
+}
+
+@media (min-width: 768px) {
+  .ornate-frame {
+    padding: 36px;
+    border-radius: 16px;
+  }
+
+  .ornate-corner {
+    width: 90px;
+    height: 90px;
+  }
+
+  .ornate-center-top,
+  .ornate-center-bottom {
+    width: 160px;
+    height: 65px;
+  }
+}
+
+/* ===== Scroll Grid Animation ===== */
+.scroll-grid-section {
+  min-height: 240vh;
+}
+
+.scroll-grid-content {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  place-items: center;
+  align-content: center;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+.scroll-grid {
+  --offset: 0;
+  --container-width: 1600px;
+  --gap: clamp(10px, 7.35vw, 80px);
+  width: var(--container-width);
+  max-width: calc(100% - 4rem);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: var(--gap);
+  margin: 0 auto;
+  align-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+@media (max-width: 768px) {
+  .scroll-grid {
+    grid-template-columns: repeat(3, 1fr);
+    --offset: -1;
+    max-width: calc(100% - 2rem);
+  }
+}
+
+.scroll-grid-layer {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
+
+/* Layer 1: Outer edges */
+.scroll-grid-layer:nth-of-type(1) div:nth-of-type(odd) {
+  grid-column: 1;
+}
+.scroll-grid-layer:nth-of-type(1) div:nth-of-type(even) {
+  grid-column: -2;
+}
+
+/* Layer 2: Inner columns */
+.scroll-grid-layer:nth-of-type(2) div:nth-of-type(odd) {
+  grid-column: calc(2 + var(--offset));
+}
+.scroll-grid-layer:nth-of-type(2) div:nth-of-type(even) {
+  grid-column: calc(-3 - var(--offset));
+}
+
+/* Layer 3: Center column top and bottom */
+.scroll-grid-layer:nth-of-type(3) div:first-of-type {
+  grid-column: calc(3 + var(--offset));
+  grid-row: 1;
+}
+.scroll-grid-layer:nth-of-type(3) div:last-of-type {
+  grid-column: calc(3 + var(--offset));
+  grid-row: -1;
+}
+
+.scroll-grid img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.scroll-grid-scaler {
+  position: relative;
+  grid-area: 2 / calc(3 + var(--offset));
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-grid-scaler img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  object-fit: cover;
+  border-radius: 1rem;
+  width: 100%;
+  height: 100%;
 }
